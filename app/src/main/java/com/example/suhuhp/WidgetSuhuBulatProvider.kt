@@ -5,7 +5,9 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.widget.RemoteViews
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -38,11 +40,29 @@ class WidgetSuhuBulatProvider : AppWidgetProvider() {
         ) {
             val tampilan = RemoteViews(konteks.packageName, R.layout.widget_suhu_bulat)
 
+            // ===== Background dari gambar custom (kalau ada) =====
+            val fileGambar = File(konteks.filesDir, "widget_bg.png")
+            if (fileGambar.exists()) {
+                try {
+                    val bitmap = BitmapFactory.decodeFile(fileGambar.absolutePath)
+                    if (bitmap != null) {
+                        tampilan.setImageViewBitmap(R.id.bgBulat, bitmap)
+                    } else {
+                        tampilan.setImageViewResource(R.id.bgBulat, R.drawable.latar_bulat)
+                    }
+                } catch (e: Exception) {
+                    tampilan.setImageViewResource(R.id.bgBulat, R.drawable.latar_bulat)
+                }
+            } else {
+                // Pakai background default bulat
+                tampilan.setImageViewResource(R.id.bgBulat, R.drawable.latar_bulat)
+            }
+
             // ===== Jam =====
             val kalender = Calendar.getInstance()
             val localeIndo = Locale("in", "ID")
 
-            val formatHari = SimpleDateFormat("EEEE", localeIndo)   // Nama hari panjang
+            val formatHari = SimpleDateFormat("EEEE", localeIndo)
             val formatJam = SimpleDateFormat("HH", Locale.getDefault())
             val formatMenit = SimpleDateFormat("mm", Locale.getDefault())
 
