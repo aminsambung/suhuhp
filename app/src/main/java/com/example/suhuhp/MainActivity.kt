@@ -70,6 +70,18 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "🔄 Suhu disegarkan", Toast.LENGTH_SHORT).show()
         }
 
+        // ===== Tombol Pilih Model Widget =====
+val prefs = PrefsHelper(this)
+
+fun gantiModel(model: String) {
+    prefs.modelWidget = model
+    Toast.makeText(this, "✅ Model: ${model.uppercase()}", Toast.LENGTH_SHORT).show()
+    segarkanWidget()
+}
+
+findViewById<Button>(R.id.btnModelKotak).setOnClickListener { gantiModel("kotak") }
+findViewById<Button>(R.id.btnModelBulat).setOnClickListener { gantiModel("bulat") }
+findViewById<Button>(R.id.btnModelMinimal).setOnClickListener { gantiModel("minimal") }
         // ===== Tombol Pilih Gambar Widget =====
         findViewById<Button>(R.id.tombolPilihGambar).setOnClickListener {
             pilihGambarLauncher.launch("image/*")
