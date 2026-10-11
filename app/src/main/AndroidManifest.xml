@@ -21,18 +21,34 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <!-- Widget Kotak -->
+<receiver
+    android:name=".WidgetSuhuProvider"
+    android:exported="true"
+    android:label="@string/nama_widget">
+    <intent-filter>
+        <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+        <action android:name="com.example.suhuhp.SEGARKAN_WIDGET" />
+    </intent-filter>
+    <meta-data
+        android:name="android.appwidget.provider"
+        android:resource="@xml/info_widget_suhu" />
+</receiver>
 
-        <receiver
-            android:name=".WidgetSuhuProvider"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="com.example.suhuhp.SEGARKAN_WIDGET" />
-            </intent-filter>
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/info_widget_suhu" />
-        </receiver>
+<!-- Widget Bulat (BARU) -->
+<receiver
+    android:name=".WidgetSuhuBulatProvider"
+    android:exported="true"
+    android:label="@string/nama_widget_bulat">
+    <intent-filter>
+        <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+        <action android:name="com.example.suhuhp.SEGARKAN_WIDGET_BULAT" />
+    </intent-filter>
+    <meta-data
+        android:name="android.appwidget.provider"
+        android:resource="@xml/info_widget_bulat" />
+</receiver>
 
     </application>
 </manifest>
