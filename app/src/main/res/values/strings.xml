@@ -4,4 +4,6 @@
     <string name="nama_widget">Widget Suhu HP</string>
     <string name="deskripsi_widget">Menampilkan suhu HP dan CPU secara real-time</string>
     <string name="tombol_segarkan">Segarkan Suhu</string>
+    <string name="nama_widget_bulat">Suhu HP (Bulat)</string>
+    <string name="deskripsi_widget_bulat">Widget suhu bulat seperti smartwatch</string>
 </resources>
