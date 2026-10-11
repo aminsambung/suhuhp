@@ -8,4 +8,5 @@
     <color name="kuning_hangat">#FF9800</color>
     <color name="merah_panas">#F44336</color>
     <color name="biru_tombol">#2196F3</color>
+    <color name="ic_launcher_background">#1A1A1A</color>
 </resources>
