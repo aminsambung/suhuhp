@@ -177,6 +177,47 @@
         android:textStyle="bold"
         android:layout_marginTop="24dp"/>
 
+    <!-- ===== Pilih Model Widget ===== -->
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="🎨 Pilih Model Widget"
+    android:textColor="#FFFFFF"
+    android:textSize="14sp"
+    android:textStyle="bold"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="8dp"/>
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginBottom="16dp">
+
+    <Button
+        android:id="@+id/btnModelKotak"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="📦 Kotak"
+        android:backgroundTint="#2196F3"
+        android:layout_marginEnd="6dp"/>
+
+    <Button
+        android:id="@+id/btnModelBulat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="⭕ Bulat"
+        android:backgroundTint="#9C27B0"
+        android:layout_marginEnd="6dp"/>
+
+    <Button
+        android:id="@+id/btnModelMinimal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="✨ Minimal"
+        android:backgroundTint="#4CAF50"/>
+</LinearLayout>
+
     <!-- Tombol Segarkan -->
     <Button
         android:id="@+id/tombolSegarkan"
