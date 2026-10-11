@@ -186,6 +186,24 @@
         android:backgroundTint="#2196F3"
         android:layout_marginTop="16dp"/>
 
+    <!-- Tombol Pilih Gambar Widget -->
+  <Button
+    android:id="@+id/tombolPilihGambar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="🖼️ Pilih Gambar Widget"
+    android:backgroundTint="#9C27B0"
+    android:layout_marginTop="12dp"/>
+
+<!-- Tombol Reset Gambar -->
+<Button
+    android:id="@+id/tombolResetGambar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="❌ Reset ke Default"
+    android:backgroundTint="#607D8B"
+    android:layout_marginTop="8dp"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
