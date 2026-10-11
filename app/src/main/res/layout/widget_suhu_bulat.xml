@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Background lingkaran -->
+    <ImageView
+        android:id="@+id/bgBulat"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/latar_bulat"
+        android:contentDescription="Background bulat"/>
+
+    <!-- Konten -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="20dp">
+
+        <!-- Jam Besar -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/bJam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="09"
+                android:textColor="#FFFFFF"
+                android:textSize="34sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/bTitikDua"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"
+                android:textColor="#FFFFFF"
+                android:textSize="34sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/bMenit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="23"
+                android:textColor="#FFFFFF"
+                android:textSize="34sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <!-- Hari -->
+        <TextView
+            android:id="@+id/bHari"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SENIN"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.2"
+            android:layout_marginTop="-4dp"/>
+
+        <!-- Garis pemisah -->
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="1dp"
+            android:background="#66FFFFFF"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:contentDescription="Pemisah"/>
+
+        <!-- Info Suhu -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/bSuhuHp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🌡️ 37.9°C"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/bSuhuCpu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  🔥 N/A"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:layout_marginStart="4dp"/>
+        </LinearLayout>
+
+        <!-- Baterai -->
+        <TextView
+            android:id="@+id/bBaterai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🔋 82%"
+            android:textColor="#4CAF50"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:layout_marginTop="4dp"/>
+
+    </LinearLayout>
+</FrameLayout>
