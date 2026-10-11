@@ -126,14 +126,38 @@ jobs:
           echo "📦 Versi: ${VERSION}"
 
       # ===== 11. Rename APK & AAB =====
-      - name: 📛 Rename APK & AAB
-        run: |
-          mv app/build/outputs/apk/release/app-release.apk \
-             app/build/outputs/apk/release/SuhuHP-v${{ env.VERSION }}.apk
-          mv app/build/outputs/bundle/release/app-release.aab \
-             app/build/outputs/bundle/release/SuhuHP-v${{ env.VERSION }}.aab
-          ls -la app/build/outputs/apk/release/
-          ls -la app/build/outputs/bundle/release/
+       - name: 📛 Rename APK & AAB
+  run: |
+    echo "📁 Isi folder APK:"
+    ls -la app/build/outputs/apk/release/ || echo "Folder APK kosong"
+    echo ""
+    echo "📁 Isi folder AAB:"
+    ls -la app/build/outputs/bundle/release/ || echo "Folder AAB kosong"
+    echo ""
+
+    # Cari file APK (signed atau unsigned)
+    APK_FILE=$(find app/build/outputs/apk/release/ -name "*.apk" | head -1)
+    if [ -n "$APK_FILE" ]; then
+      mv "$APK_FILE" app/build/outputs/apk/release/SuhuHP-v${{ env.VERSION }}.apk
+      echo "✅ APK di-rename: SuhuHP-v${{ env.VERSION }}.apk"
+    else
+      echo "❌ APK tidak ditemukan"
+      exit 1
+    fi
+
+    # Cari file AAB
+    AAB_FILE=$(find app/build/outputs/bundle/release/ -name "*.aab" | head -1)
+    if [ -n "$AAB_FILE" ]; then
+      mv "$AAB_FILE" app/build/outputs/bundle/release/SuhuHP-v${{ env.VERSION }}.aab
+      echo "✅ AAB di-rename: SuhuHP-v${{ env.VERSION }}.aab"
+    else
+      echo "⚠️ AAB tidak ditemukan (tidak fatal)"
+    fi
+
+    echo ""
+    echo "📁 Hasil akhir:"
+    ls -la app/build/outputs/apk/release/
+    ls -la app/build/outputs/bundle/release/
 
       # ===== 12. Upload artifact APK =====
       - name: 📤 Upload APK
