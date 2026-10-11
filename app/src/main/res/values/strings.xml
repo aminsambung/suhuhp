@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Suhu HP</string>
+    <string name="nama_widget">Widget Suhu HP</string>
+    <string name="deskripsi_widget">Menampilkan suhu HP dan CPU secara real-time</string>
+    <string name="tombol_segarkan">Segarkan Suhu</string>
+</resources>
