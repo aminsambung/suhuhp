@@ -1,0 +1,136 @@
+name: Build & Release APK
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'          # Trigger saat push tag: v1.0.0
+  workflow_dispatch:       # Bisa trigger manual dari GitHub
+    inputs:
+      version_name:
+        description: 'Versi (contoh: 1.0.0)'
+        required: true
+        default: '1.0.0'
+
+permissions:
+  contents: write          # Untuk buat release
+
+jobs:
+  build-release:
+    name: Build Release APK
+    runs-on: ubuntu-latest
+
+    steps:
+      # ===== 1. Checkout =====
+      - name: 📥 Checkout kode
+        uses: actions/checkout@v4
+
+      # ===== 2. Setup JDK 17 =====
+      - name: ☕ Setup JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # ===== 3. Setup Gradle (dengan cache) =====
+      - name: ⚙️ Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          cache-read-only: false
+
+      # ===== 4. Grant execute permission =====
+      - name: 🔧 Beri izin eksekusi gradlew
+        run: chmod +x ./gradlew
+
+      # ===== 5. Decode keystore dari secret =====
+      - name: 🔐 Decode keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > app/release.keystore
+
+      # ===== 6. Buat keystore.properties =====
+      - name: 📝 Buat keystore.properties
+        run: |
+          cat > keystore.properties <<EOF
+          storeFile=release.keystore
+          storePassword=${{ secrets.KEYSTORE_PASSWORD }}
+          keyAlias=${{ secrets.KEY_ALIAS }}
+          keyPassword=${{ secrets.KEY_PASSWORD }}
+          EOF
+
+      # ===== 7. Build Release APK =====
+      - name: 🏗️ Build Release APK
+        run: ./gradlew assembleRelease --stacktrace
+
+      # ===== 8. Build Release AAB (untuk Play Store) =====
+      - name: 📦 Build Release AAB
+        run: ./gradlew bundleRelease --stacktrace
+
+      # ===== 9. Rename APK =====
+      - name: 📛 Rename APK
+        run: |
+          VERSION="${{ github.ref_name }}"
+          if [ -z "$VERSION" ]; then VERSION="${{ github.event.inputs.version_name }}"; fi
+          VERSION=${VERSION#v}   # hapus prefix 'v'
+          mv app/build/outputs/apk/release/app-release.apk \
+             app/build/outputs/apk/release/SuhuHP-v${VERSION}.apk
+          mv app/build/outputs/bundle/release/app-release.aab \
+             app/build/outputs/bundle/release/SuhuHP-v${VERSION}.aab
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+
+      # ===== 10. Upload artifact APK =====
+      - name: 📤 Upload APK sebagai artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SuhuHP-APK-v${{ env.VERSION }}
+          path: app/build/outputs/apk/release/SuhuHP-v*.apk
+          retention-days: 30
+
+      # ===== 11. Upload artifact AAB =====
+      - name: 📤 Upload AAB sebagai artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SuhuHP-AAB-v${{ env.VERSION }}
+          path: app/build/outputs/bundle/release/SuhuHP-v*.aab
+          retention-days: 30
+
+      # ===== 12. Buat GitHub Release =====
+      - name: 🎉 Buat GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Suhu HP v${{ env.VERSION }}"
+          body: |
+            ## 🌡️ Suhu HP v${{ env.VERSION }}
+
+            Aplikasi monitoring suhu HP & CPU dengan widget homescreen.
+
+            ### ✨ Fitur
+            - 🕐 Jam digital real-time
+            - 🌡️ Suhu HP (baterai) otomatis
+            - 🔥 Suhu CPU (jika tersedia)
+            - 🔋 Persentase baterai
+            - 📱 Widget homescreen real-time
+
+            ### 📦 Cara Install
+            1. Download file `SuhuHP-v${{ env.VERSION }}.apk`
+            2. Buka di HP Android (minimal Android 7.0)
+            3. Izinkan "Install from unknown sources"
+            4. Install & buka aplikasi
+
+            ### ⚠️ Catatan
+            - Suhu CPU mungkin N/A di HP tanpa root — ini normal
+            - Widget update otomatis saat app dibuka
+          files: |
+            app/build/outputs/apk/release/SuhuHP-v${{ env.VERSION }}.apk
+            app/build/outputs/bundle/release/SuhuHP-v${{ env.VERSION }}.aab
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # ===== 13. Cleanup keystore =====
+      - name: 🧹 Hapus keystore
+        if: always()
+        run: |
+          rm -f app/release.keystore
+          rm -f keystore.properties
