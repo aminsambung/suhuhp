@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="hitam_lembut">#1A1A1A</color>
+    <color name="krem_muda">#F5E6D3</color>
+    <color name="krem_tua">#D4B896</color>
+    <color name="oranye_aksen">#E67E22</color>
+    <color name="hijau_normal">#4CAF50</color>
+    <color name="kuning_hangat">#FF9800</color>
+    <color name="merah_panas">#F44336</color>
+    <color name="biru_tombol">#2196F3</color>
+</resources>
