@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/latar_widget"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/dJam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="09"
+            android:textColor="#1A1A1A"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            android:fontFamily="monospace"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:textColor="#1A1A1A"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            android:fontFamily="monospace"/>
+
+        <TextView
+            android:id="@+id/dMenit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="40"
+            android:textColor="#E67E22"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            android:fontFamily="monospace"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/dHari"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SENIN"
+        android:textColor="#666666"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.3"/>
+
+    <TextView
+        android:id="@+id/dSuhu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🌡️ 37.9°C"
+        android:textColor="#1A1A1A"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginTop="6dp"/>
+
+</LinearLayout>
