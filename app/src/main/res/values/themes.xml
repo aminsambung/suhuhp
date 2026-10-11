@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.SuhuHP" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/biru_tombol</item>
+        <item name="colorAccent">@color/oranye_aksen</item>
+        <item name="android:statusBarColor">@color/hitam_lembut</item>
+        <item name="android:windowBackground">@color/hitam_lembut</item>
+    </style>
+</resources>
