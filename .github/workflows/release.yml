@@ -1,18 +1,17 @@
-name: Build & Release APK
+name: Build Suhu HP APK
 
 on:
   push:
-    branches:
-      - main
-      - master
+    branches: [ main, master ]
     paths:
       - 'app/**'
       - 'build.gradle.kts'
       - 'settings.gradle.kts'
       - 'gradle.properties'
       - 'gradle/**'
-    tags:
-      - 'v*'
+      - '.github/workflows/release.yml'
+  pull_request:
+    branches: [ main, master ]
   workflow_dispatch:
 
 permissions:
@@ -20,11 +19,11 @@ permissions:
 
 jobs:
   build:
-    name: Build Release
+    name: Build APK
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup JDK 17
@@ -35,33 +34,39 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
+        with:
+          cache-read-only: false
 
-      - name: Izin gradlew
+      - name: Grant gradlew permission
         run: chmod +x ./gradlew
 
-      - name: Build Release
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug --stacktrace
+
+      - name: Build Release APK
         run: ./gradlew assembleRelease --stacktrace
 
-      - name: List output
-        run: |
-          echo "=== Folder APK ==="
-          ls -la app/build/outputs/apk/release/ || true
-          echo "=== Folder AAB ==="
-          ls -la app/build/outputs/bundle/release/ || true
-
-      - name: Rename APK
-        run: |
-          APK=$(find app/build/outputs/apk/release -name "*.apk" | head -1)
-          if [ -n "$APK" ]; then
-            cp "$APK" app/build/outputs/apk/release/SuhuHP.apk
-            echo "OK: APK siap"
-          else
-            echo "ERROR: APK tidak ditemukan"
-            exit 1
-          fi
-
-      - name: Upload APK
+      - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: SuhuHP-APK
-          path: app/build/outputs/apk/release/SuhuHP.apk
+          name: suhuhp-debug
+          path: app/build/outputs/apk/debug/*.apk
+          retention-days: 30
+
+      - name: Upload Release APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: suhuhp-release
+          path: app/build/outputs/apk/release/*.apk
+          retention-days: 30
+
+      - name: Build Summary
+        run: |
+          echo "## Build Sukses!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Commit: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "Branch: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### APK Artifacts" >> $GITHUB_STEP_SUMMARY
+          ls -lh app/build/outputs/apk/debug/ || true
+          ls -lh app/build/outputs/apk/release/ || true
